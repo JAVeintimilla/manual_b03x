@@ -15,7 +15,7 @@ Web estática del manual en castellano. Sin compilación: se sube tal cual a Git
 
 1. Crear el repositorio (por ejemplo `b03x-manual`) y subir el contenido de esta carpeta a la raíz.
 2. Settings → Pages → Deploy from a branch → `main` / `(root)`.
-3. Queda en `https://<usuario>.github.io/](https://javeintimilla.github.io/b03x-manual/`.
+3. Queda en `https://<usuario>.github.io/b03x-manual/`.
 
 ## Enlaces directos
 

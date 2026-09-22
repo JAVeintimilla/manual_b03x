@@ -14,10 +14,34 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.47.0/dist/tabler-icons.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/dark.css">
-  <link rel="stylesheet" href="css/styles.css">
+  <style>body.is-booting { visibility: hidden; }</style>
+  <script>
+    // Leo la versión sin caché y cargo estilos y lógica con ?v=versión: así cada publicación obliga a descargarlos de nuevo
+    (async () => {
+      let version = String(Date.now());
+      try {
+        const response = await fetch("version.json", { cache: "no-store" });
+        version = (await response.json()).version;
+      } catch (error) {
+        console.warn("No he podido leer version.json; cargo sin caché", error);
+      }
+      window.APP_VERSION = version;
+      const stylesheet = document.createElement("link");
+      stylesheet.rel = "stylesheet";
+      stylesheet.href = `css/styles.css?v=${encodeURIComponent(version)}`;
+      stylesheet.onload = stylesheet.onerror = () => document.body.classList.remove("is-booting");
+      document.head.append(stylesheet);
+      const appScript = document.createElement("script");
+      appScript.type = "module";
+      appScript.src = `js/app.js?v=${encodeURIComponent(version)}`;
+      const appendApp = () => { if (!appScript.isConnected) document.body.append(appScript); };
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", appendApp, { once: true });
+      else appendApp();
+    })();
+  </script>
   <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
 </head>
-<body>
+<body class="is-booting">
   <a class="skip-link" href="#content">Saltar al contenido</a>
 
   <div class="app">
@@ -33,6 +57,7 @@
         <a class="pdf-link" href="docs/B03X_guia_completa_castellano.pdf" target="_blank" rel="noopener">
           <i class="ti ti-file-type-pdf"></i> Abrir el PDF completo
         </a>
+        <p class="app-version">Versión <span data-app-version></span></p>
       </div>
     </aside>
 
@@ -54,9 +79,12 @@
 
   <sl-drawer id="drawer" placement="start" label="Índice" class="drawer">
     <nav class="tree tree--drawer" id="tree-mobile"></nav>
-    <a slot="footer" class="pdf-link" href="docs/B03X_guia_completa_castellano.pdf" target="_blank" rel="noopener">
-      <i class="ti ti-file-type-pdf"></i> Abrir el PDF completo
-    </a>
+    <div slot="footer">
+      <a class="pdf-link" href="docs/B03X_guia_completa_castellano.pdf" target="_blank" rel="noopener">
+        <i class="ti ti-file-type-pdf"></i> Abrir el PDF completo
+      </a>
+      <p class="app-version">Versión <span data-app-version></span></p>
+    </div>
   </sl-drawer>
 
   <div class="search" id="search" hidden>
@@ -74,6 +102,5 @@
 
   <button class="to-top" id="to-top" aria-label="Volver arriba"><i class="ti ti-arrow-up"></i></button>
 
-  <script type="module" src="js/app.js"></script>
 </body>
 </html>

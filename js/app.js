@@ -12,7 +12,8 @@
  * @typedef {{ section: Section, block: Block, text: string, title: string }} SearchEntry
  */
 
-const DATA_URL = "data/manual.json";
+const APP_VERSION = String(/** @type {any} */ (window).APP_VERSION ?? "dev");
+const DATA_URL = `data/manual.json?v=${encodeURIComponent(APP_VERSION)}`;
 const ICON_PATH = "icons/testigos/";
 const THEME_KEY = "b03x-theme";
 const CHECK_KEY = "b03x-checks";
@@ -602,6 +603,7 @@ async function loadManual() {
 }
 
 async function start() {
+  document.querySelectorAll("[data-app-version]").forEach((element) => { element.textContent = APP_VERSION; });
   initTheme();
   initChrome();
   initSearch();
