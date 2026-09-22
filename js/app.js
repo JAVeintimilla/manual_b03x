@@ -3,16 +3,22 @@
 /**
  * @typedef {{ t: string, html?: string, items?: Array<string|{title:string, html:string}>,
  *             head?: Array<string|{icon:string}>, rows?: Array<Array<string|{icon:string}>>,
- *             tone?: string|null, icons?: boolean }} ContentNode
+ *             tone?: string|null, icons?: boolean, calendar?: Array<{date: string, end: string|null, kind: string, charge: boolean}> }} ContentNode
  * @typedef {{ id: string, title: string, marker: string, keywords?: string, content: ContentNode[] }} Section
  * @typedef {{ id: string, number: number, title: string, subtitle: string, icon: string,
  *             intro: ContentNode[], sections: Section[] }} Block
  * @typedef {{ label: string, icon: string, tone: string, section: string }} QuickLink
- * @typedef {{ title: string, subtitle: string, blocks: Block[], quick: QuickLink[] }} Manual
+ * @typedef {{ date: string, end: string|null, kind: string, charge: boolean, text?: string, where?: string, battery?: string, cost?: string }} CalendarEntry
+ * @typedef {{ id: string, label: string, pattern: string, flags: string, home: string, sections: string[] }} GlossaryTerm
+ * @typedef {{ title: string, subtitle: string, blocks: Block[], quick: QuickLink[],
+ *             calendar: { section: string, hideFrom: string, entries: CalendarEntry[] }, glossary: GlossaryTerm[] }} Manual
  * @typedef {{ section: Section, block: Block, text: string, title: string }} SearchEntry
  */
 
-const APP_VERSION = String(/** @type {any} */ (window).APP_VERSION ?? "dev");
+const VERSION_INFO = /** @type {{version?: string, date?: string}} */ (/** @type {any} */ (window).APP_VERSION_INFO ?? {});
+const APP_VERSION = String(/** @type {any} */ (window).APP_VERSION ?? VERSION_INFO.version ?? "dev");
+const AUTHOR = "Toni Veintimilla";
+const REPO_URL = "https://github.com/JAVeintimilla/manual_b03x";
 const DATA_URL = `data/manual.json?v=${encodeURIComponent(APP_VERSION)}`;
 const ICON_PATH = "icons/testigos/";
 const THEME_KEY = "b03x-theme";
@@ -61,6 +67,46 @@ function createElement(tag, className = "", html = "") {
   if (className) element.className = className;
   if (html) element.innerHTML = html;
   return element;
+}
+
+// ---------------------------------------------------------------- fechas y calendario
+
+/** Devuelvo la fecha de hoy en formato ISO local. Admito ?fecha=AAAA-MM-DD para probar otros días. */
+function getToday() {
+  const forced = new URLSearchParams(location.search).get("fecha");
+  if (forced && /^\d{4}-\d{2}-\d{2}$/.test(forced)) return forced;
+  const now = new Date();
+  const pad = (value) => String(value).padStart(2, "0");
+  return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+}
+
+const TODAY = getToday();
+
+function isCalendarHidden() {
+  return Boolean(manual?.calendar && TODAY >= manual.calendar.hideFrom);
+}
+
+/** @param {{date: string, end: string|null}} entry */
+const coversToday = (entry) => entry.date <= TODAY && TODAY <= (entry.end ?? entry.date);
+
+function todaysChargeEntry() {
+  if (!manual?.calendar || isCalendarHidden()) return null;
+  return manual.calendar.entries.find((entry) => entry.charge && coversToday(entry)) ?? null;
+}
+
+/** Busco en todo el calendario si hoy tiene fila propia o, si no, qué fila corresponde a esta semana. */
+function calendarFocus() {
+  const entries = manual?.calendar?.entries ?? [];
+  const hasExact = entries.some(coversToday);
+  const past = entries.filter((entry) => entry.date <= TODAY);
+  const weekDate = past.length ? past[past.length - 1].date : null;
+  return { hasExact, weekDate };
+}
+
+/** Formateo una fecha ISO como «jueves 8 de octubre». */
+function formatLongDate(isoDate) {
+  const [year, month, day] = isoDate.split("-").map(Number);
+  return new Date(year, month - 1, day).toLocaleDateString("es-ES", { weekday: "long", day: "numeric", month: "long" });
 }
 
 // ---------------------------------------------------------------- tema
@@ -130,6 +176,83 @@ function linkCrossReferences(root) {
   }
 }
 
+// ---------------------------------------------------------------- glosario de referencias cruzadas
+
+/** @type {Array<{term: GlossaryTerm, regex: RegExp}>} */
+let glossaryMatchers = [];
+
+function buildGlossary() {
+  glossaryMatchers = (manual?.glossary ?? []).map((term) => ({ term, regex: new RegExp(term.pattern, term.flags) }));
+}
+
+/** Marco la primera aparición de cada término del glosario en el apartado para enlazarlo con los demás. */
+function linkGlossaryTerms(root, sectionId) {
+  if (!glossaryMatchers.length || !sectionId) return;
+  const skipSelector = "a, button, h1, h3, h4, th, .term, mark";
+  for (const { term, regex } of glossaryMatchers) {
+    const others = term.sections.filter((id) => id !== sectionId && !isHiddenSection(id));
+    if (!others.length) continue;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) {
+      const textNode = /** @type {Text} */ (walker.currentNode);
+      if (textNode.parentElement?.closest(skipSelector)) continue;
+      const text = textNode.nodeValue ?? "";
+      const match = regex.exec(text);
+      regex.lastIndex = 0;
+      if (!match) continue;
+      const button = createElement("button", "term");
+      button.type = "button";
+      button.dataset.term = term.id;
+      button.textContent = match[0];
+      const after = textNode.splitText(match.index);
+      after.nodeValue = (after.nodeValue ?? "").slice(match[0].length);
+      after.before(button);
+      break;
+    }
+  }
+}
+
+const popoverElement = createElement("div", "term-popover");
+popoverElement.setAttribute("role", "dialog");
+popoverElement.hidden = true;
+document.body.append(popoverElement);
+
+/** @param {HTMLElement} anchor */
+function openTermPopover(anchor) {
+  const term = manual?.glossary.find((candidate) => candidate.id === anchor.dataset.term);
+  if (!term) return;
+  const currentId = decodeURIComponent(location.hash.replace(/^#\/?/, ""));
+  const linkFor = (sectionId) => {
+    const entry = sectionsById.get(sectionId);
+    if (!entry) return "";
+    return `<a href="#/${sectionId}"><i class="ti ti-${entry.block.icon}"></i><span><strong>${entry.section.title}</strong>
+      <small>${entry.block.number}. ${entry.block.title}</small></span></a>`;
+  };
+  const homeLink = term.home !== currentId ? linkFor(term.home) : "";
+  const alsoLinks = term.sections.filter((id) => id !== currentId && id !== term.home && !isHiddenSection(id)).map(linkFor).join("");
+  popoverElement.innerHTML = `
+    <p class="term-popover__title">${term.label}</p>
+    ${homeLink ? `<p class="term-popover__label">Dónde se explica</p>${homeLink}` : `<p class="term-popover__label">Se explica en este apartado</p>`}
+    ${alsoLinks ? `<p class="term-popover__label">También aparece en</p>${alsoLinks}` : ""}`;
+  popoverElement.hidden = false;
+  const box = anchor.getBoundingClientRect();
+  const width = Math.min(340, window.innerWidth - 24);
+  const left = Math.min(Math.max(12, box.left), window.innerWidth - width - 12);
+  const below = box.bottom + 8;
+  const fitsBelow = below + popoverElement.offsetHeight < window.innerHeight - 12;
+  popoverElement.style.width = `${width}px`;
+  popoverElement.style.left = `${left}px`;
+  popoverElement.style.top = `${fitsBelow ? below : Math.max(12, box.top - popoverElement.offsetHeight - 8)}px`;
+  popoverElement.classList.remove("is-open");
+  void popoverElement.offsetWidth;
+  popoverElement.classList.add("is-open");
+}
+
+function closeTermPopover() {
+  popoverElement.hidden = true;
+  popoverElement.classList.remove("is-open");
+}
+
 // ---------------------------------------------------------------- renderizado de contenido
 
 /** @param {string|{icon:string}} cell */
@@ -147,11 +270,21 @@ function renderTable(node) {
   const thead = createElement("thead");
   thead.innerHTML = `<tr>${head.map((cell) => `<th>${cellHtml(cell)}</th>`).join("")}</tr>`;
   const tbody = createElement("tbody");
-  for (const row of node.rows ?? []) {
+  const calendar = node.calendar ?? null;
+  const focus = calendarFocus();
+  const exactIndex = calendar ? calendar.findIndex(coversToday) : -1;
+  const weekIndex = calendar && !focus.hasExact ? calendar.findIndex((entry) => entry.date === focus.weekDate) : -1;
+  for (const [rowIndex, row] of (node.rows ?? []).entries()) {
     const tr = createElement("tr");
+    const entry = calendar?.[rowIndex];
+    if (entry?.charge) tr.classList.add("is-charge");
+    if (rowIndex === exactIndex) tr.classList.add("is-today");
+    if (rowIndex === weekIndex) tr.classList.add("is-week");
     row.forEach((cell, index) => {
       const td = createElement("td", typeof cell === "string" ? "" : "icon-cell", cellHtml(cell));
       td.dataset.label = labels[index] ?? "";
+      if (index === 0 && rowIndex === exactIndex) td.insertAdjacentHTML("beforeend", ` <span class="today-badge">Hoy</span>`);
+      if (index === 0 && rowIndex === weekIndex) td.insertAdjacentHTML("beforeend", ` <span class="today-badge today-badge--week">Esta semana</span>`);
       tr.append(td);
     });
     tbody.append(tr);
@@ -219,7 +352,21 @@ function renderNodes(nodes, sectionId) {
     container.append(renderer(node));
   }
   linkCrossReferences(container);
+  linkGlossaryTerms(container, sectionId);
   return container;
+}
+
+/** El calendario de carga desaparece del menú, la portada y el buscador cuando termina. */
+function isHiddenSection(sectionId) {
+  return isCalendarHidden() && sectionId === manual?.calendar.section;
+}
+
+function renderCredits() {
+  const date = VERSION_INFO.date ? `Actualizado el ${formatLongDate(VERSION_INFO.date).replace(/^\S+ /, "")} de ${VERSION_INFO.date.slice(0, 4)}` : "";
+  return `
+    <p class="credits__version">Versión ${APP_VERSION}${date ? `<br>${date}` : ""}</p>
+    <p class="credits__author">Creado y desarrollado por <strong>${AUTHOR}</strong></p>
+    <p class="credits__links"><a href="${REPO_URL}" target="_blank" rel="noopener"><i class="ti ti-brand-github"></i> Código en GitHub</a></p>`;
 }
 
 // ---------------------------------------------------------------- vistas
@@ -228,6 +375,7 @@ function renderHome() {
   if (!manual) return;
   const view = createElement("div", "home");
   const quickItems = manual.quick
+    .filter((quick) => !isHiddenSection(quick.section))
     .map((quick, index) => `
       <a class="quick__item tone-${quick.tone}" href="#/${quick.section}" style="--i:${index}">
         <span class="lamp"><i class="ti ti-${quick.icon}"></i></span>${quick.label}
@@ -245,16 +393,31 @@ function renderHome() {
       </a></li>`)
     .join("");
 
+  const charge = todaysChargeEntry();
+  const chargeBanner = charge ? `
+    <a class="charge-alert" href="#/${manual.calendar.section}">
+      <span class="charge-alert__icon"><i class="ti ti-battery-charging"></i></span>
+      <span class="charge-alert__body">
+        <strong>Hoy toca cargar</strong>
+        <span>${charge.kind.charAt(0) + charge.kind.slice(1).toLowerCase()} en <b>${charge.where}</b>, ${charge.battery}</span>
+        ${charge.text ? `<small>${charge.text}</small>` : ""}
+      </span>
+      <i class="ti ti-chevron-right"></i>
+    </a>` : "";
   view.innerHTML = `
     <section class="home-hero">
-      <h1>Leapmotor B03X</h1>
-      <p>Lo que necesitas del manual, en castellano y a dos toques.</p>
+      <div class="home-hero__top">
+        <div><h1>Leapmotor B03X</h1>
+        <p>Lo que necesitas del manual, en castellano y a dos toques.</p></div>
+        ${chargeBanner}
+      </div>
       <button class="home-search" data-open-search><i class="ti ti-search"></i>Qué te pasa o qué buscas</button>
     </section>
     <h2>Consultas rápidas</h2>
     <nav class="quick" aria-label="Consultas rápidas">${quickItems}</nav>
     <h2>El manual completo</h2>
-    <ol class="blocks">${blockItems}</ol>`;
+    <ol class="blocks">${blockItems}</ol>
+    <footer class="colophon">${renderCredits()}</footer>`;
 
   const alreadyTested = sessionStorage.getItem(SELF_TEST_KEY);
   if (!alreadyTested && !prefersReducedMotion.matches) {
@@ -275,6 +438,7 @@ function renderBlock(block) {
   if (block.intro.length) view.append(renderNodes(block.intro, block.id));
   const list = createElement("ol", "blocks section-cards");
   list.innerHTML = block.sections
+    .filter((section) => !isHiddenSection(section.id))
     .map((section) => `
       <li><a class="card card--section" href="#/${section.id}">
         <span class="card__icon card__icon--marker">${section.marker}</span>
@@ -350,13 +514,13 @@ function buildTree(container) {
     const childrenId = `${container.id}-${block.id}`;
     group.innerHTML = `
       <button class="tree__block" aria-expanded="false" aria-controls="${childrenId}">
-        <span class="tree__num">${block.number}</span>
+        <span class="tree__num" title="Bloque ${block.number}"><i class="ti ti-${block.icon}"></i></span>
         <span class="tree__title">${block.title}</span>
         <i class="ti ti-chevron-right tree__chev"></i>
       </button>
       <div class="tree__children" id="${childrenId}"><ul>
         <li><a class="tree__link" href="#/${block.id}" data-route="${block.id}">Ver el bloque entero</a></li>
-        ${block.sections.map((section) => `<li><a class="tree__link" href="#/${section.id}" data-route="${section.id}">${section.title}</a></li>`).join("")}
+        ${block.sections.filter((section) => !isHiddenSection(section.id)).map((section) => `<li><a class="tree__link" href="#/${section.id}" data-route="${section.id}">${section.title}</a></li>`).join("")}
       </ul></div>`;
     group.querySelector(".tree__block")?.addEventListener("click", () => toggleGroup(group));
     container.append(group);
@@ -410,6 +574,11 @@ function resolveRoute() {
   if (block) return { ...renderBlock(block), routeId, blockId: block.id };
 
   const entry = sectionsById.get(routeId);
+  if (entry && isHiddenSection(routeId)) {
+    const view = createElement("div", "not-found",
+      `<h1>El calendario de carga ya terminó</h1><p>Cubría de septiembre a enero. Las normas de carga siguen en <a href="#/${entry.block.id}">el bloque ${entry.block.number}</a>.</p>`);
+    return { view, title: "Calendario terminado", crumbs: [], routeId, blockId: entry.block.id };
+  }
   if (entry) return { ...renderSection(entry.section, entry.block, entry.index), routeId, blockId: entry.block.id };
 
   return { ...renderNotFound(), routeId, blockId: "" };
@@ -426,7 +595,22 @@ function navigate() {
   });
   document.title = `${route.title} · B03X`;
   drawerElement?.hide?.();
+  closeTermPopover();
   highlightPendingTerm();
+  focusCalendarRow();
+}
+
+/** En el calendario me sitúo en la fila de hoy o, si no hay, en la de esta semana. */
+function focusCalendarRow() {
+  if (pendingHighlight) return;
+  requestAnimationFrame(() => {
+    const row = contentElement.querySelector("tr.is-today, tr.is-week");
+    if (!row) return;
+    setTimeout(() => {
+      row.scrollIntoView({ block: "center", behavior: prefersReducedMotion.matches ? "auto" : "smooth" });
+      row.classList.add("is-flash");
+    }, 250);
+  });
 }
 
 /** Tras abrir un resultado de búsqueda, resalto la primera aparición del término en la página. */
@@ -468,6 +652,7 @@ function searchManual(query) {
   const terms = normalize(query).split(/\s+/).filter((term) => term.length > 1);
   if (!terms.length) return [];
   return searchIndex
+    .filter((entry) => !isHiddenSection(entry.section.id))
     .map((entry) => {
       const matchesAll = terms.every((term) => entry.title.includes(term) || entry.text.includes(term));
       if (!matchesAll) return null;
@@ -499,6 +684,7 @@ function renderResults() {
   selectedResult = 0;
   if (!query) {
     searchResults.innerHTML = manual?.quick
+      .filter((quick) => !isHiddenSection(quick.section))
       .map((quick, index) => `<li><a href="#/${quick.section}" style="--i:${index}"><i class="ti ti-${quick.icon} res-icon"></i><span><strong>${quick.label}</strong></span></a></li>`)
       .join("") ?? "";
     markSelected();
@@ -552,6 +738,12 @@ function initSearch() {
     const target = /** @type {HTMLElement} */ (event.target);
     if (target.closest("[data-open-search]")) openSearch();
     if (target.closest("[data-close]")) closeSearch();
+    const termButton = target.closest(".term");
+    if (termButton) {
+      openTermPopover(/** @type {HTMLElement} */ (termButton));
+      return;
+    }
+    if (!target.closest(".term-popover")) closeTermPopover();
     const resultLink = target.closest(".search__results a");
     if (!resultLink) return;
     pendingHighlight = /** @type {HTMLElement} */ (resultLink).dataset.term ?? "";
@@ -571,7 +763,7 @@ function initSearch() {
     action();
   });
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeSearch();
+    if (event.key === "Escape") { closeSearch(); closeTermPopover(); }
     const isTyping = ["INPUT", "TEXTAREA"].includes(/** @type {HTMLElement} */ (event.target).tagName);
     if (event.key === "/" && !isTyping) {
       event.preventDefault();
@@ -585,7 +777,10 @@ function initSearch() {
 function initChrome() {
   document.getElementById("menu-open")?.addEventListener("click", () => drawerElement?.show?.());
   toTopButton.addEventListener("click", () => window.scrollTo({ top: 0, behavior: prefersReducedMotion.matches ? "auto" : "smooth" }));
-  window.addEventListener("scroll", () => toTopButton.classList.toggle("is-visible", window.scrollY > 600), { passive: true });
+  window.addEventListener("scroll", () => {
+    toTopButton.classList.toggle("is-visible", window.scrollY > 600);
+    if (!popoverElement.hidden) closeTermPopover();
+  }, { passive: true });
   window.addEventListener("hashchange", navigate);
 }
 
@@ -602,7 +797,7 @@ async function loadManual() {
 }
 
 async function start() {
-  document.querySelectorAll("[data-app-version]").forEach((element) => { element.textContent = APP_VERSION; });
+  document.querySelectorAll("[data-credits]").forEach((element) => { element.innerHTML = renderCredits(); });
   initTheme();
   initChrome();
   initSearch();
@@ -614,6 +809,7 @@ async function start() {
   buildTree(/** @type {HTMLElement} */ (document.getElementById("tree-desktop")));
   buildTree(/** @type {HTMLElement} */ (document.getElementById("tree-mobile")));
   buildSearchIndex();
+  buildGlossary();
   navigate();
 }
 

@@ -21,7 +21,9 @@
       let version = String(Date.now());
       try {
         const response = await fetch(`version.json?t=${Date.now()}`, { cache: "no-store" });
-        version = (await response.json()).version;
+        const info = await response.json();
+        window.APP_VERSION_INFO = info;
+        version = info.version;
       } catch (error) {
         console.warn("No he podido leer version.json; cargo sin caché", error);
       }
@@ -57,7 +59,7 @@
         <a class="pdf-link" href="docs/B03X_guia_completa_castellano.pdf" target="_blank" rel="noopener">
           <i class="ti ti-file-type-pdf"></i> Abrir el PDF completo
         </a>
-        <p class="app-version">Versión <span data-app-version></span></p>
+        <div class="credits" data-credits></div>
       </div>
     </aside>
 
@@ -83,7 +85,7 @@
       <a class="pdf-link" href="docs/B03X_guia_completa_castellano.pdf" target="_blank" rel="noopener">
         <i class="ti ti-file-type-pdf"></i> Abrir el PDF completo
       </a>
-      <p class="app-version">Versión <span data-app-version></span></p>
+      <div class="credits" data-credits></div>
     </div>
   </sl-drawer>
 

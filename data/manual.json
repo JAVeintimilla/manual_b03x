@@ -830,6 +830,20 @@
          "99 %",
          "0 &euro;"
         ]
+       ],
+       "calendar": [
+        {
+         "date": "2026-09-24",
+         "end": null,
+         "kind": "CARGA 1",
+         "charge": true
+        },
+        {
+         "date": "2026-09-26",
+         "end": null,
+         "kind": "PREPARAR",
+         "charge": false
+        }
        ]
       },
       {
@@ -890,6 +904,44 @@
          "62 %",
          "0 &euro;"
         ]
+       ],
+       "calendar": [
+        {
+         "date": "2026-10-03",
+         "end": null,
+         "kind": "NADA",
+         "charge": false
+        },
+        {
+         "date": "2026-10-08",
+         "end": null,
+         "kind": "CARGA 2",
+         "charge": true
+        },
+        {
+         "date": "2026-10-10",
+         "end": null,
+         "kind": "VIAJE",
+         "charge": false
+        },
+        {
+         "date": "2026-10-17",
+         "end": null,
+         "kind": "NADA",
+         "charge": false
+        },
+        {
+         "date": "2026-10-24",
+         "end": null,
+         "kind": "NADA",
+         "charge": false
+        },
+        {
+         "date": "2026-10-31",
+         "end": null,
+         "kind": "NADA",
+         "charge": false
+        }
        ]
       },
       {
@@ -936,6 +988,32 @@
          "92 &rarr; 96 %",
          "~2 &euro;"
         ]
+       ],
+       "calendar": [
+        {
+         "date": "2026-11-07",
+         "end": null,
+         "kind": "NADA",
+         "charge": false
+        },
+        {
+         "date": "2026-11-13",
+         "end": null,
+         "kind": "CARGA 3",
+         "charge": true
+        },
+        {
+         "date": "2026-11-21",
+         "end": null,
+         "kind": "NADA",
+         "charge": false
+        },
+        {
+         "date": "2026-11-28",
+         "end": null,
+         "kind": "ENSAYO",
+         "charge": true
+        }
        ]
       },
       {
@@ -1017,6 +1095,62 @@
          "92 %",
          "0 &euro;"
         ]
+       ],
+       "calendar": [
+        {
+         "date": "2026-12-05",
+         "end": null,
+         "kind": "NADA",
+         "charge": false
+        },
+        {
+         "date": "2026-12-12",
+         "end": null,
+         "kind": "PREPARAR",
+         "charge": false
+        },
+        {
+         "date": "2026-12-16",
+         "end": null,
+         "kind": "CARGA",
+         "charge": true
+        },
+        {
+         "date": "2026-12-18",
+         "end": null,
+         "kind": "VIAJE",
+         "charge": false
+        },
+        {
+         "date": "2026-12-19",
+         "end": "2026-12-20",
+         "kind": "ESTANCIA",
+         "charge": false
+        },
+        {
+         "date": "2026-12-21",
+         "end": null,
+         "kind": "VUELTA",
+         "charge": false
+        },
+        {
+         "date": "2026-12-23",
+         "end": null,
+         "kind": "IMPORTANTE",
+         "charge": true
+        },
+        {
+         "date": "2026-12-26",
+         "end": null,
+         "kind": "NADA",
+         "charge": false
+        },
+        {
+         "date": "2027-01-01",
+         "end": null,
+         "kind": "NADA",
+         "charge": false
+        }
        ]
       },
       {
@@ -3151,11 +3285,82 @@
       },
       {
        "t": "h3",
-       "html": "Auto Hold"
+       "html": "Auto Hold, explicado"
       },
       {
        "t": "p",
-       "html": "Se activa en Ajustes &gt; Conducción. Para que funcione hacen falta: coche en READY, puertas cerradas, <b>cinturón del conductor abrochado</b> y freno pisado. Detente, pisa el freno con firmeza hasta que se encienda su testigo y ya puedes soltarlo; al acelerar, el coche sale. No lo actives si te remolcan ni en túneles de lavado automáticos."
+       "html": "<b>Qué es.</b> Mantiene el coche parado sin que tengas que seguir pisando el freno. Está pensado para paradas cortas y frecuentes: semáforos, retenciones, stop and go y paradas en rampa. En cuanto pisas el acelerador, suelta el freno y el coche arranca con normalidad."
+      },
+      {
+       "t": "p",
+       "html": "<b>Diferencia con el resto de frenos automáticos.</b> El <b>arranque en pendiente</b> solo sujeta 1-2 segundos al soltar el freno en una cuesta; el <b>Auto Hold</b> sujeta todo el tiempo que estés parado; y el <b>freno de estacionamiento (EPB)</b> es para dejar el coche aparcado y se aplica solo al poner P."
+      },
+      {
+       "t": "table",
+       "tone": "note",
+       "icons": false,
+       "head": [
+        "Paso",
+        "Qué haces",
+        "Qué hace el coche"
+       ],
+       "rows": [
+        [
+         "1. Activarlo una vez",
+         "<i>Ajustes &gt; Conducción &gt; Auto Hold</i>, o desde el panel de <b>Acciones rápidas</b> (deslizando desde arriba)",
+         "Se enciende el testigo de Auto Hold <b>disponible</b> (en espera)"
+        ],
+        [
+         "2. Pararte",
+         "Frena hasta detenerte y <b>pisa el freno con firmeza</b> un momento",
+         "El testigo pasa a <b>activo</b>: el coche queda sujeto"
+        ],
+        [
+         "3. Esperar",
+         "Suelta el freno y relaja el pie",
+         "El coche no se mueve, ni en llano ni en rampa"
+        ],
+        [
+         "4. Salir",
+         "Pisa el acelerador",
+         "Suelta el freno al instante y arranca según la pendiente"
+        ]
+       ]
+      },
+      {
+       "t": "p",
+       "html": "Solo funciona si se cumplen <b>todas</b> estas condiciones: función activada en pantalla, coche en <b>READY</b>, <b>todas las puertas cerradas</b>, <b>cinturón del conductor abrochado</b> y freno pisado. Si alguna falla, el coche no retiene: es la razón habitual de que «no funcione»."
+      },
+      {
+       "t": "table",
+       "tone": "note",
+       "icons": false,
+       "head": [
+        "Testigo",
+        "Significado"
+       ],
+       "rows": [
+        [
+         "Auto Hold disponible",
+         "Función activada, esperando a que te detengas"
+        ],
+        [
+         "Auto Hold activo",
+         "Está sujetando el coche ahora mismo"
+        ],
+        [
+         "Avería de Auto Hold",
+         "No funciona: para en un sitio seguro y llévalo a revisar"
+        ]
+       ]
+      },
+      {
+       "t": "note",
+       "html": "<b>Para el garaje:</b> con Auto Hold activado puedes parar a mitad de la rampa, soltar el freno y el coche no rueda hacia atrás. Al acelerar, sale sin retroceder."
+      },
+      {
+       "t": "warn",
+       "html": "<b>Importante.</b> No sustituye al conductor: vigila siempre que el coche está quieto. <b>Desactívalo</b> si te remolcan y antes de entrar en un túnel de lavado automático."
       }
      ]
     },
@@ -3285,8 +3490,8 @@
          "Ruleta izquierda hacia la izquierda (más cerca) o hacia la derecha (más lejos)"
         ],
         [
-         "Aceptar el límite detectado",
-         "Cuando el cuadro sugiere una velocidad por una señal, pulsa la ruleta"
+         "Adoptar el límite detectado",
+         "Con el crucero activo, cuando el cuadro muestra el límite de una señal, pulsa la ruleta izquierda: la velocidad del crucero pasa a ese límite y el coche <b>acelera o frena solo</b> hasta ajustarse a ella. Sin el crucero activo, la señal solo avisa y no toca la velocidad"
         ],
         [
          "Reanudar tras detenerse",
@@ -3323,6 +3528,24 @@
          "65-130 km/h con el LCC activo",
          "Se lanza poniendo el intermitente. Se activa en Asistencia a la conducción"
         ]
+       ]
+      },
+      {
+       "t": "h3",
+       "html": "En atascos: no hay un asistente específico"
+      },
+      {
+       "t": "p",
+       "html": "El manual no incluye una función separada de «asistente de atascos». Hace ese papel la combinación de <b>crucero adaptativo de velocidad completa</b> y <b>centrado de carril</b>:"
+      },
+      {
+       "t": "list",
+       "items": [
+        "El crucero sigue al coche de delante y puede <b>detenerse del todo</b> sin que toques el freno.",
+        "Tras una <b>parada breve</b>, reanuda cuando confirmas con un <b>toque suave al acelerador</b>. Si la parada se alarga, sal del modo pisando el freno.",
+        "Se activa y desactiva igual que siempre: palanca hacia abajo una vez (crucero) o dos (crucero + centrado), y hacia arriba para salir.",
+        "El centrado de carril solo actúa desde 30 km/h, así que en el arranca y para real te ayuda sobre todo el crucero.",
+        "En retenciones cuesta arriba, el manual recomienda pisar el freno con firmeza unos segundos antes de arrancar para que no ruede hacia atrás."
        ]
       },
       {
@@ -3410,6 +3633,14 @@
       {
        "t": "p",
        "html": "Botones para alternar 2D y 3D, vista de ruedas y gran angular, y un botón de ajustes con tres opciones interesantes: <b>chasis transparente</b> (muestra lo que hay bajo el coche), <b>líneas de trayectoria dinámicas</b> y <b>sonido de los sensores</b>. La vista cenital muestra además las líneas de radar y la distancia a los obstáculos."
+      },
+      {
+       "t": "h3",
+       "html": "Cómo se reparte la pantalla"
+      },
+      {
+       "t": "p",
+       "html": "La vista tiene dos zonas fijas: la <b>vista cenital</b> del coche (2D o 3D, con radar y trayectorias) y una <b>zona principal</b> con una cámara grande. Tocando en la vista cenital la parte delantera, trasera o un lateral del coche, la zona principal cambia a esa cámara. El manual no ofrece una vista con las cuatro cámaras a la vez ni permite cambiar la distribución: se ve una cámara grande cada vez, más la vista cenital."
       },
       {
        "t": "h3",
@@ -3936,12 +4167,12 @@
     },
     {
      "id": "b6-9",
-     "title": "Datos técnicos",
+     "title": "Datos técnicos de nuestro B03X",
      "marker": "9",
      "content": [
       {
        "t": "p",
-       "html": "El manual cubre dos versiones de batería. Tu Design Pro Max es la de <b>53 kWh</b>."
+       "html": "Solo la versión que tenemos: <b>Design Pro Max con batería de 53 kWh</b>."
       },
       {
        "t": "table",
@@ -3949,101 +4180,184 @@
        "icons": false,
        "head": [
         "Dato",
-        "Batería de 39,8 kWh",
-        "Batería de 53 kWh"
+        "Valor"
        ],
        "rows": [
         [
          "Largo / ancho / alto",
-         "4.270 / 1.810 / 1.635 mm",
          "4.270 / 1.810 / 1.635 mm"
         ],
         [
          "Distancia entre ejes",
-         "2.605 mm",
          "2.605 mm"
         ],
         [
-         "Peso en vacío",
-         "1.450 kg",
-         "1.550 kg"
-        ],
-        [
-         "Masa máxima autorizada",
-         "1.920 kg",
-         "2.020 kg"
+         "Peso en vacío / masa máxima autorizada",
+         "1.550 kg / 2.020 kg"
         ],
         [
          "Altura libre al suelo",
-         "175 mm",
          "175 mm"
         ],
         [
          "Diámetro de giro",
-         "10,2 m",
          "10,2 m"
         ],
         [
          "Ángulo de ataque / salida",
-         "18&deg; / 24&deg;",
          "18&deg; / 24&deg;"
         ],
         [
          "Velocidad máxima",
-         "160 km/h",
          "160 km/h"
         ],
         [
          "Pendiente máxima superable",
-         "30 % o más",
          "30 % o más"
         ],
         [
          "Tracción / plazas",
-         "Delantera / 5",
          "Delantera / 5"
         ],
         [
-         "Autonomía WLTC",
-         "301 km",
-         "<b>401 km</b>"
+         "Autonomía / consumo WLTC",
+         "<b>401 km</b> / 15,3 kWh/100 km"
         ],
         [
-         "Consumo WLTC",
-         "15,2 kWh/100 km",
-         "15,3 kWh/100 km"
-        ],
-        [
-         "Química de la batería",
-         "LFP (litio-ferrofosfato)",
-         "LFP (litio-ferrofosfato)"
-        ],
-        [
-         "Tensión / capacidad",
-         "331,8 V / 120 Ah",
-         "363,4 V / 146 Ah"
-        ],
-        [
-         "Protección de la batería",
-         "IP67",
-         "IP67"
+         "Batería de tracción",
+         "LFP (litio-ferrofosfato), 53 kWh, 363,4 V, 146 Ah, protección IP67"
         ],
         [
          "Motor",
-         "Síncrono de imanes permanentes",
-         "Síncrono de imanes permanentes"
-        ],
-        [
-         "Potencia máxima",
-         "130 kW",
-         "<b>145 kW</b>"
-        ],
-        [
-         "Par máximo",
-         "200 Nm",
-         "200 Nm"
+         "Síncrono de imanes permanentes, <b>145 kW</b> (197 CV) y 200 Nm"
         ]
        ]
+      },
+      {
+       "t": "h3",
+       "html": "Ruedas y neumáticos"
+      },
+      {
+       "t": "table",
+       "tone": "note",
+       "icons": false,
+       "head": [
+        "Dato",
+        "Valor"
+       ],
+       "rows": [
+        [
+         "Medida de neumático (delante y detrás)",
+         "<b>215/50 R18</b>: 215 mm de ancho, perfil del 50 % (107,5 mm de flanco) y llanta de 18 pulgadas"
+        ],
+        [
+         "Diámetro total aproximado de la rueda",
+         "unos 672 mm (cálculo a partir de la medida)"
+        ],
+        [
+         "Equilibrado",
+         "Hasta 60 g por lado y diferencia entre lados de 8 g como máximo"
+        ],
+        [
+         "Convergencia delantera / trasera",
+         "6&prime; &plusmn; 5&prime; / 6&prime; &plusmn; 20&prime;"
+        ],
+        [
+         "Caída delantera / trasera",
+         "&minus;30&prime; &plusmn; 45&prime; / &minus;1,18&deg; &plusmn; 30&prime;"
+        ],
+        [
+         "Avance e inclinación del pivote delantero",
+         "3,1&deg; &plusmn; 45&prime; / 11,99&deg; &plusmn; 45&prime;"
+        ],
+        [
+         "Rueda de repuesto",
+         "No lleva: kit de compresor y sellante en el maletero"
+        ]
+       ]
+      },
+      {
+       "t": "h3",
+       "html": "Presión de inflado según el caso"
+      },
+      {
+       "t": "table",
+       "tone": "note",
+       "icons": false,
+       "head": [
+        "Caso",
+        "Delante",
+        "Detrás"
+       ],
+       "rows": [
+        [
+         "Uso normal: una o dos personas, poco equipaje",
+         "<b>2,5 bar</b> (250 kPa)",
+         "<b>2,5 bar</b>"
+        ],
+        [
+         "Coche cargado: cuatro o cinco personas o maletero lleno",
+         "<b>2,7 bar</b> (270 kPa)",
+         "<b>2,7 bar</b>"
+        ],
+        [
+         "Viaje largo cargado (por ejemplo, Andorra con equipaje de esquí)",
+         "2,7 bar",
+         "2,7 bar"
+        ],
+        [
+         "Antes de montar cadenas o fundas",
+         "Nunca por debajo de la presión recomendada",
+         "Igual"
+        ]
+       ]
+      },
+      {
+       "t": "small",
+       "html": "Se mide siempre en frío, con el coche parado al menos tres horas o tras rodar muy poco. Como regla general, la presión baja algo con el frío, así que en invierno conviene revisarla más a menudo. Después de inflar, recalibra el control de presiones en <i>Ajustes &gt; Sistema &gt; Mantenimiento</i>."
+      },
+      {
+       "t": "h3",
+       "html": "Cadenas y fundas textiles"
+      },
+      {
+       "t": "table",
+       "tone": "note",
+       "icons": false,
+       "head": [
+        "Dato",
+        "Valor"
+       ],
+       "rows": [
+        [
+         "Medida para comprarlas",
+         "<b>215/50 R18</b>. En la tienda se busca por esa medida exacta; cada fabricante tiene su propia referencia"
+        ],
+        [
+         "Dónde se montan",
+         "Por parejas en las <b>ruedas motrices</b>, que en el B03X son las <b>delanteras</b>"
+        ],
+        [
+         "Velocidad máxima",
+         "La que indique el fabricante de las cadenas y nunca más de <b>50 km/h</b>"
+        ],
+        [
+         "Presión",
+         "Nunca montarlas con los neumáticos bajos de presión"
+        ],
+        [
+         "Cuándo quitarlas",
+         "En cuanto el asfalto esté seco o sin nieve ni hielo"
+        ],
+        [
+         "Normativa",
+         "Cada país tiene sus reglas sobre cadenas: comprobarlas antes de viajar"
+        ]
+       ]
+      },
+      {
+       "t": "small",
+       "html": "Las cadenas no vienen con el coche. Unas cadenas inadecuadas pueden dañar neumáticos, llantas, suspensión, frenos y carrocería."
       },
       {
        "t": "h3",
@@ -4064,29 +4378,101 @@
         ],
         [
          "Discos: grosor nuevo / mínimo",
-         "Delante 24 / 22 mm &middot; Detrás 10 / 8 mm"
+         "Delante 24 / 22 mm; detrás 10 / 8 mm"
         ],
         [
          "Pastillas: grosor nuevo / mínimo",
-         "Delante 8 / 2 mm &middot; Detrás 7 / 2 mm"
+         "Delante 8 / 2 mm; detrás 7 / 2 mm"
         ],
         [
          "Refrigerante",
-         "OAT, protección hasta &minus;40 &deg;C &middot; unos 6,5 litros"
+         "OAT, protección hasta &minus;40 &deg;C, unos 6,5 litros"
         ],
         [
          "Líquido de frenos",
-         "DOT 4 &middot; 820 ml"
+         "DOT 4, 820 ml"
         ],
         [
          "Aceite del reductor",
-         "Idemitsu LI-004C &middot; 1,45 litros"
+         "Idemitsu LI-004C, 1,45 litros"
         ],
         [
          "Lavaparabrisas",
-         "Con etanol, protección hasta &minus;30 &deg;C &middot; 1 litro"
+         "Con etanol, protección hasta &minus;30 &deg;C, 1 litro"
         ]
        ]
+      },
+      {
+       "t": "h3",
+       "html": "Fusibles"
+      },
+      {
+       "t": "p",
+       "html": "Tres cajas: una bajo el capó delantero, otra junto al borne positivo de la batería de 12 V y otra en el lado del conductor del salpicadero. Son fusibles de cuchilla de distintos amperajes, desde 5 A para sensores y módulos pequeños hasta los de 60-250 A de la caja principal. Siempre se sustituyen por uno del <b>mismo amperaje</b>."
+      },
+      {
+       "t": "table",
+       "tone": "note",
+       "icons": false,
+       "head": [
+        "Fusible",
+        "Amperaje",
+        "Protege"
+       ],
+       "rows": [
+        [
+         "RF17",
+         "10 A",
+         "Tomas USB delanteras"
+        ],
+        [
+         "RF05",
+         "10 A",
+         "Módulo Bluetooth, USB traseros y carga inalámbrica del móvil"
+        ],
+        [
+         "RF19",
+         "5 A",
+         "Lector de la tarjeta NFC"
+        ],
+        [
+         "RF12",
+         "5 A",
+         "Sensor de lluvia y luz"
+        ],
+        [
+         "RF11",
+         "15 A",
+         "Toma de diagnóstico"
+        ],
+        [
+         "FF11",
+         "15 A",
+         "Claxon"
+        ],
+        [
+         "SF14",
+         "30 A",
+         "Luneta térmica"
+        ],
+        [
+         "SF07",
+         "40 A",
+         "Ventilador del climatizador"
+        ]
+       ]
+      },
+      {
+       "t": "small",
+       "html": "La lista completa, con la posición de cada fusible en su caja, está en el manual original."
+      },
+      {
+       "t": "h3",
+       "html": "Lo que el manual no detalla"
+      },
+      {
+       "t": "p",
+       "html": "La <b>medida de las escobillas</b> y las características de la <b>batería de 12 V</b> no aparecen en el manual. Para comprar escobillas, lo más fiable es medir las que lleva el coche o buscarlas por modelo en la tienda; para la batería de 12 V, preguntar en el concesionario."
       },
       {
        "t": "p",
@@ -4163,6 +4549,656 @@
    "icon": "gauge",
    "tone": "note",
    "section": "b6-2"
+  }
+ ],
+ "calendar": {
+  "section": "b2-2",
+  "hideFrom": "2027-01-01",
+  "entries": [
+   {
+    "date": "2026-09-24",
+    "end": null,
+    "kind": "CARGA 1",
+    "charge": true,
+    "text": "Entrega del coche. Llega ya cargado al 100 %: cuenta como la primera carga del rodaje",
+    "where": "Concesionario",
+    "battery": "100 %",
+    "cost": "0 €"
+   },
+   {
+    "date": "2026-09-26",
+    "end": null,
+    "kind": "PREPARAR",
+    "charge": false,
+    "text": "Configurar el coche y la app en los tres móviles",
+    "where": "Casa",
+    "battery": "99 %",
+    "cost": "0 €"
+   },
+   {
+    "date": "2026-10-03",
+    "end": null,
+    "kind": "NADA",
+    "charge": false,
+    "text": "",
+    "where": "—",
+    "battery": "96 %",
+    "cost": "0 €"
+   },
+   {
+    "date": "2026-10-08",
+    "end": null,
+    "kind": "CARGA 2",
+    "charge": true,
+    "text": "Segunda del rodaje. Hasta el 100 %. Unos 30 minutos, cabe en un recado",
+    "where": "CC Aqua",
+    "battery": "92 → 100 %",
+    "cost": "0 €"
+   },
+   {
+    "date": "2026-10-10",
+    "end": null,
+    "kind": "VIAJE",
+    "charge": false,
+    "text": "Al pueblo a comer, 100 km ida y vuelta. Sin cargar",
+    "where": "—",
+    "battery": "100 → 73 %",
+    "cost": "0 €"
+   },
+   {
+    "date": "2026-10-17",
+    "end": null,
+    "kind": "NADA",
+    "charge": false,
+    "text": "",
+    "where": "—",
+    "battery": "69 %",
+    "cost": "0 €"
+   },
+   {
+    "date": "2026-10-24",
+    "end": null,
+    "kind": "NADA",
+    "charge": false,
+    "text": "",
+    "where": "—",
+    "battery": "65 %",
+    "cost": "0 €"
+   },
+   {
+    "date": "2026-10-31",
+    "end": null,
+    "kind": "NADA",
+    "charge": false,
+    "text": "",
+    "where": "—",
+    "battery": "62 %",
+    "cost": "0 €"
+   },
+   {
+    "date": "2026-11-07",
+    "end": null,
+    "kind": "NADA",
+    "charge": false,
+    "text": "",
+    "where": "—",
+    "battery": "58 %",
+    "cost": "0 €"
+   },
+   {
+    "date": "2026-11-13",
+    "end": null,
+    "kind": "CARGA 3",
+    "charge": true,
+    "text": "Tercera del rodaje. 2 h 30. Se deja enchufado y se sube andando a la falla. Con esta acaba el rodaje: ya se puede usar carga rápida",
+    "where": "Mercado Central",
+    "battery": "54 → 100 %",
+    "cost": "~6 €"
+   },
+   {
+    "date": "2026-11-21",
+    "end": null,
+    "kind": "NADA",
+    "charge": false,
+    "text": "",
+    "where": "—",
+    "battery": "96 %",
+    "cost": "0 €"
+   },
+   {
+    "date": "2026-11-28",
+    "end": null,
+    "kind": "ENSAYO",
+    "charge": true,
+    "text": "Práctica de carga rápida con Jaime. 15 minutos, antes de su viaje",
+    "where": "La Fe",
+    "battery": "92 → 96 %",
+    "cost": "~2 €"
+   },
+   {
+    "date": "2026-12-05",
+    "end": null,
+    "kind": "NADA",
+    "charge": false,
+    "text": "",
+    "where": "—",
+    "battery": "88 %",
+    "cost": "0 €"
+   },
+   {
+    "date": "2026-12-12",
+    "end": null,
+    "kind": "PREPARAR",
+    "charge": false,
+    "text": "Revisión del viaje de Jaime: ruta, cadenas, seguro y apps",
+    "where": "Casa",
+    "battery": "84 %",
+    "cost": "0 €"
+   },
+   {
+    "date": "2026-12-16",
+    "end": null,
+    "kind": "CARGA",
+    "charge": true,
+    "text": "Carga completa antes del viaje. 50 minutos",
+    "where": "CC Aqua",
+    "battery": "83 → 100 %",
+    "cost": "0 €"
+   },
+   {
+    "date": "2026-12-18",
+    "end": null,
+    "kind": "VIAJE",
+    "charge": false,
+    "text": "Jaime sale hacia Andorra",
+    "where": "En ruta",
+    "battery": "—",
+    "cost": "~45 €"
+   },
+   {
+    "date": "2026-12-19",
+    "end": "2026-12-20",
+    "kind": "ESTANCIA",
+    "charge": false,
+    "text": "En Andorra",
+    "where": "Red FEDA",
+    "battery": "—",
+    "cost": "variable"
+   },
+   {
+    "date": "2026-12-21",
+    "end": null,
+    "kind": "VUELTA",
+    "charge": false,
+    "text": "Regreso. Llega con el 20-30 %",
+    "where": "En ruta",
+    "battery": "→ 25 %",
+    "cost": "~45 €"
+   },
+   {
+    "date": "2026-12-23",
+    "end": null,
+    "kind": "IMPORTANTE",
+    "charge": true,
+    "text": "Carga de recalibración hasta el 100 %. 3 h 45. El coche vuelve de varias cargas rápidas en frío y esta es la que le devuelve la medida correcta del porcentaje. No saltársela",
+    "where": "Mercado Central",
+    "battery": "25 → 100 %",
+    "cost": "~7 €"
+   },
+   {
+    "date": "2026-12-26",
+    "end": null,
+    "kind": "NADA",
+    "charge": false,
+    "text": "",
+    "where": "—",
+    "battery": "96 %",
+    "cost": "0 €"
+   },
+   {
+    "date": "2027-01-01",
+    "end": null,
+    "kind": "NADA",
+    "charge": false,
+    "text": "",
+    "where": "—",
+    "battery": "92 %",
+    "cost": "0 €"
+   }
+  ]
+ },
+ "glossary": [
+  {
+   "id": "ebd",
+   "label": "EBD (reparto de frenada)",
+   "pattern": "\\bEBD\\b|reparto de (?:la )?frenada",
+   "flags": "i",
+   "home": "b5-6",
+   "sections": [
+    "b3-2",
+    "b5-6"
+   ]
+  },
+  {
+   "id": "abs",
+   "label": "ABS",
+   "pattern": "\\bABS\\b",
+   "flags": "",
+   "home": "b5-6",
+   "sections": [
+    "b3-2",
+    "b5-6"
+   ]
+  },
+  {
+   "id": "esp",
+   "label": "ESP",
+   "pattern": "\\bESP\\b",
+   "flags": "",
+   "home": "b5-6",
+   "sections": [
+    "b3-2",
+    "b3-4",
+    "b5-3",
+    "b5-6"
+   ]
+  },
+  {
+   "id": "hdc",
+   "label": "HDC",
+   "pattern": "\\bHDC\\b",
+   "flags": "",
+   "home": "b5-6",
+   "sections": [
+    "b3-2",
+    "b3-4",
+    "b4-3",
+    "b5-6"
+   ]
+  },
+  {
+   "id": "autohold",
+   "label": "Auto Hold",
+   "pattern": "\\bAuto ?Hold\\b",
+   "flags": "i",
+   "home": "b5-6",
+   "sections": [
+    "b3-2",
+    "b3-4",
+    "b4-3",
+    "b4-8",
+    "b5-6"
+   ]
+  },
+  {
+   "id": "epb",
+   "label": "Freno de estacionamiento",
+   "pattern": "freno de estacionamiento|\\bEPB\\b",
+   "flags": "i",
+   "home": "b5-2",
+   "sections": [
+    "b1-1",
+    "b3-2",
+    "b5-2",
+    "b5-6",
+    "b6-9"
+   ]
+  },
+  {
+   "id": "aeb",
+   "label": "Frenada automática (AEB)",
+   "pattern": "\\bAEB\\b",
+   "flags": "",
+   "home": "b5-7",
+   "sections": [
+    "b3-2",
+    "b5-3",
+    "b5-7"
+   ]
+  },
+  {
+   "id": "acc",
+   "label": "Crucero adaptativo",
+   "pattern": "\\bACC\\b|crucero adaptativo",
+   "flags": "i",
+   "home": "b5-8",
+   "sections": [
+    "b3-2",
+    "b5-8"
+   ]
+  },
+  {
+   "id": "lcc",
+   "label": "Centrado de carril",
+   "pattern": "\\bLCC\\b|centrado de carril",
+   "flags": "i",
+   "home": "b5-8",
+   "sections": [
+    "b3-2",
+    "b4-3",
+    "b5-8"
+   ]
+  },
+  {
+   "id": "alc",
+   "label": "Cambio de carril asistido",
+   "pattern": "\\bALC\\b|cambio de carril",
+   "flags": "i",
+   "home": "b5-8",
+   "sections": [
+    "b4-3",
+    "b5-8"
+   ]
+  },
+  {
+   "id": "lane",
+   "label": "Aviso y mantenimiento de carril",
+   "pattern": "\\bLDW\\b|\\bLKA\\b|salida de carril|mantenimiento de carril",
+   "flags": "i",
+   "home": "b5-7",
+   "sections": [
+    "b3-2",
+    "b4-3",
+    "b4-4",
+    "b5-7"
+   ]
+  },
+  {
+   "id": "bsd",
+   "label": "Ángulo muerto",
+   "pattern": "ángulo muerto|\\bBSD\\b",
+   "flags": "i",
+   "home": "b5-7",
+   "sections": [
+    "b4-4",
+    "b5-7"
+   ]
+  },
+  {
+   "id": "lpedal",
+   "label": "L-pedal (un pedal)",
+   "pattern": "\\bL-pedal\\b|un pedal",
+   "flags": "i",
+   "home": "b5-3",
+   "sections": [
+    "b3-4",
+    "b4-3",
+    "b4-8",
+    "b5-3"
+   ]
+  },
+  {
+   "id": "creep",
+   "label": "Creep",
+   "pattern": "\\bcreep\\b",
+   "flags": "i",
+   "home": "b5-3",
+   "sections": [
+    "b3-4",
+    "b4-3",
+    "b4-8",
+    "b5-2",
+    "b5-3"
+   ]
+  },
+  {
+   "id": "regen",
+   "label": "Recuperación de energía",
+   "pattern": "recuperación de energía",
+   "flags": "i",
+   "home": "b5-3",
+   "sections": [
+    "b4-3",
+    "b5-3"
+   ]
+  },
+  {
+   "id": "wet",
+   "label": "Modo mojado",
+   "pattern": "modo mojado",
+   "flags": "i",
+   "home": "b5-3",
+   "sections": [
+    "b3-4",
+    "b4-3"
+   ]
+  },
+  {
+   "id": "saver",
+   "label": "Súper ahorro",
+   "pattern": "súper ahorro",
+   "flags": "i",
+   "home": "b5-3",
+   "sections": [
+    "b3-4",
+    "b5-3"
+   ]
+  },
+  {
+   "id": "v2l",
+   "label": "Descarga V2L",
+   "pattern": "\\bV2L\\b",
+   "flags": "",
+   "home": "b1-2",
+   "sections": [
+    "b3-2",
+    "b4-8"
+   ]
+  },
+  {
+   "id": "ota",
+   "label": "Actualización OTA",
+   "pattern": "\\bOTA\\b",
+   "flags": "",
+   "home": "b3-5",
+   "sections": [
+    "b3-5",
+    "b4-1"
+   ]
+  },
+  {
+   "id": "nfc",
+   "label": "Tarjeta NFC",
+   "pattern": "tarjeta NFC|\\bNFC\\b",
+   "flags": "",
+   "home": "b1-6",
+   "sections": [
+    "b1-6",
+    "b3-8",
+    "b4-1",
+    "b4-2",
+    "b4-7",
+    "b4-8",
+    "b5-1",
+    "b6-9"
+   ]
+  },
+  {
+   "id": "mechkey",
+   "label": "Llave mecánica",
+   "pattern": "llave mecánica",
+   "flags": "i",
+   "home": "b1-6",
+   "sections": [
+    "b1-6",
+    "b1-7",
+    "b4-1",
+    "b4-2",
+    "b4-8",
+    "b6-7"
+   ]
+  },
+  {
+   "id": "btkey",
+   "label": "Llave Bluetooth",
+   "pattern": "llave Bluetooth",
+   "flags": "i",
+   "home": "b1-6",
+   "sections": [
+    "b1-6",
+    "b4-2",
+    "b5-1"
+   ]
+  },
+  {
+   "id": "cam360",
+   "label": "Vista 360°",
+   "pattern": "360°",
+   "flags": "",
+   "home": "b5-9",
+   "sections": [
+    "b3-4",
+    "b4-3",
+    "b5-9"
+   ]
+  },
+  {
+   "id": "tpms",
+   "label": "Control de presiones",
+   "pattern": "control de presiones|presión de (?:los )?neumáticos",
+   "flags": "i",
+   "home": "b6-2",
+   "sections": [
+    "b3-2",
+    "b5-4",
+    "b5-5",
+    "b6-2",
+    "b6-9"
+   ]
+  },
+  {
+   "id": "battery12",
+   "label": "Batería de 12 V",
+   "pattern": "batería de 12 ?V",
+   "flags": "i",
+   "home": "b6-4",
+   "sections": [
+    "b5-1",
+    "b6-4",
+    "b6-6",
+    "b6-9"
+   ]
+  },
+  {
+   "id": "life",
+   "label": "Detección de vida",
+   "pattern": "detección de vida|ocupantes olvidados",
+   "flags": "i",
+   "home": "b5-7",
+   "sections": [
+    "b3-4",
+    "b4-2",
+    "b5-7"
+   ]
+  },
+  {
+   "id": "password",
+   "label": "Arranque con contraseña",
+   "pattern": "arranque con contraseña",
+   "flags": "i",
+   "home": "b5-1",
+   "sections": [
+    "b3-4",
+    "b4-2"
+   ]
+  },
+  {
+   "id": "pairbag",
+   "label": "Airbag del acompañante",
+   "pattern": "airbag del acompañante",
+   "flags": "i",
+   "home": "b1-5",
+   "sections": [
+    "b1-5",
+    "b3-4"
+   ]
+  },
+  {
+   "id": "scene",
+   "label": "Modo escena",
+   "pattern": "modo escena|modo guardián|modo camping",
+   "flags": "i",
+   "home": "b3-4",
+   "sections": [
+    "b1-2",
+    "b3-4",
+    "b4-5",
+    "b4-8"
+   ]
+  },
+  {
+   "id": "zms",
+   "label": "Zero Motion Space",
+   "pattern": "Zero Motion Space",
+   "flags": "i",
+   "home": "b3-4",
+   "sections": [
+    "b3-4",
+    "b4-5",
+    "b4-7",
+    "b4-8"
+   ]
+  },
+  {
+   "id": "quickactions",
+   "label": "Acciones rápidas",
+   "pattern": "acciones rápidas",
+   "flags": "i",
+   "home": "b3-4",
+   "sections": [
+    "b3-4",
+    "b3-5",
+    "b4-2",
+    "b4-7",
+    "b5-6"
+   ]
+  },
+  {
+   "id": "custombtn",
+   "label": "Botón personalizado del volante",
+   "pattern": "botón personalizado",
+   "flags": "i",
+   "home": "b3-3",
+   "sections": [
+    "b3-3",
+    "b4-3",
+    "b5-9"
+   ]
+  },
+  {
+   "id": "scheduled",
+   "label": "Carga programada",
+   "pattern": "carga programada",
+   "flags": "i",
+   "home": "b1-1",
+   "sections": [
+    "b1-1",
+    "b3-2",
+    "b4-6",
+    "b4-8"
+   ]
+  },
+  {
+   "id": "chargelimit",
+   "label": "Límite de carga",
+   "pattern": "límite de carga",
+   "flags": "i",
+   "home": "b1-1",
+   "sections": [
+    "b1-1",
+    "b4-6"
+   ]
+  },
+  {
+   "id": "currentlimit",
+   "label": "Límite de corriente de seguridad",
+   "pattern": "(?:límite|limitador) de corriente",
+   "flags": "i",
+   "home": "b1-1",
+   "sections": [
+    "b1-1",
+    "b4-6"
+   ]
   }
  ]
 }
