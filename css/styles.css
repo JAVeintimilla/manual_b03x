@@ -105,7 +105,7 @@ kbd {
 .brand:hover .brand__mark { transform: rotate(-90deg); }
 .brand__text { display: flex; flex-direction: column; line-height: 1.1; }
 .brand__text strong { font: 700 1.35rem/1 var(--font-head); letter-spacing: .02em; }
-.brand__text span { font-size: .85rem; color: #9FB0C0; }
+.brand__text span { font-size: .85rem; color: #C4D0DB; }
 
 .sidebar__footer { padding: 14px 18px; border-top: 1px solid var(--asphalt-3); }
 .pdf-link { display: inline-flex; align-items: center; gap: 8px; color: #C9D4DF; text-decoration: none; font-weight: 500; }
@@ -149,7 +149,7 @@ kbd {
   position: relative; display: block;
   padding: 7px 10px 7px 16px; margin: 1px 0;
   border-radius: var(--radius-s);
-  color: #B7C3CE; text-decoration: none; font-size: .95rem; line-height: 1.3;
+  color: #E1E8EE; text-decoration: none; font-size: .95rem; line-height: 1.3;
   transition: color .2s, background-color .2s;
 }
 .tree__link::before {
@@ -174,7 +174,7 @@ kbd {
 .drawer::part(body) { padding: 0; }
 .tree--drawer { padding-top: 0; }
 .drawer .pdf-link { color: #C9D4DF; }
-.app-version { margin: 8px 0 0; font-size: .8rem; color: #7F90A0; }
+.app-version { margin: 8px 0 0; font-size: .8rem; color: #A9B8C6; }
 
 /* ---------- Barra superior ---------- */
 .topbar {
@@ -279,7 +279,7 @@ kbd {
 }
 .quick__item:hover .lamp { box-shadow: inset 0 0 0 2px var(--lamp), 0 0 18px -2px var(--lamp); }
 /* En claro uso un gris medio con tonos de testigo más profundos; en oscuro, el asfalto con tonos luminosos */
-:root { --lamp-bg: #D5DBE1; --lamp-ring: #BFC7CF; --lamp-off: #8C98A4; }
+:root { --lamp-bg: #E7EBEF; --lamp-ring: #D4DAE0; --lamp-off: #A3AEB9; }
 :root[data-theme="dark"] { --lamp-bg: var(--asphalt); --lamp-ring: var(--asphalt-3); --lamp-off: #3B4855; }
 .tone-danger { --lamp: #C62828; }
 .tone-warning { --lamp: #B87400; }

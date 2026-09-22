@@ -74,9 +74,8 @@ function applyTheme(theme) {
 }
 
 function initTheme() {
-  const saved = localStorage.getItem(THEME_KEY);
-  const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  applyTheme(saved ?? (systemDark ? "dark" : "light"));
+  // Arranco siempre en claro salvo que el usuario haya elegido otro tema en este dispositivo
+  applyTheme(localStorage.getItem(THEME_KEY) ?? "light");
   themeButton.addEventListener("click", () => {
     const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
     localStorage.setItem(THEME_KEY, next);
