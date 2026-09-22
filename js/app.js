@@ -234,10 +234,14 @@ function renderHome() {
       </a>`)
     .join("");
   const blockItems = manual.blocks
-    .map((block) => `
-      <li><a href="#/${block.id}">
-        <span class="blocks__num">${block.number}</span>
-        <span><span class="blocks__title">${block.title}</span><span class="blocks__sub">${block.subtitle}</span></span>
+    .map((block, index) => `
+      <li><a class="card" href="#/${block.id}" style="--i:${index}">
+        <span class="card__icon"><i class="ti ti-${block.icon}"></i></span>
+        <span class="card__text">
+          <span class="card__title"><span class="card__num">${block.number}</span>${block.title}</span>
+          <span class="card__sub">${block.subtitle}</span>
+        </span>
+        <i class="ti ti-chevron-right card__go"></i>
       </a></li>`)
     .join("");
 
@@ -269,9 +273,14 @@ function renderBlock(block) {
       <div><h1>${block.title}</h1><p>${block.subtitle}</p></div>
     </header>`;
   if (block.intro.length) view.append(renderNodes(block.intro, block.id));
-  const list = createElement("ol", "section-list");
+  const list = createElement("ol", "blocks section-cards");
   list.innerHTML = block.sections
-    .map((section) => `<li><a href="#/${section.id}"><span class="marker">${section.marker}</span>${section.title}<i class="ti ti-chevron-right"></i></a></li>`)
+    .map((section) => `
+      <li><a class="card card--section" href="#/${section.id}">
+        <span class="card__icon card__icon--marker">${section.marker}</span>
+        <span class="card__text"><span class="card__title">${section.title}</span></span>
+        <i class="ti ti-chevron-right card__go"></i>
+      </a></li>`)
     .join("");
   view.append(list);
   return { view, title: block.title, crumbs: [{ label: `${block.number}. ${block.title}`, href: "", className: "here" }] };
@@ -354,10 +363,20 @@ function buildTree(container) {
   }
 }
 
-function toggleGroup(group, forceOpen) {
-  const isOpen = forceOpen ?? !group.classList.contains("is-open");
+function setGroupOpen(group, isOpen) {
   group.classList.toggle("is-open", isOpen);
   group.querySelector(".tree__block")?.setAttribute("aria-expanded", String(isOpen));
+}
+
+/** Funciono como acordeón: al abrir un bloque cierro el resto del mismo árbol. */
+function toggleGroup(group, forceOpen) {
+  const isOpen = forceOpen ?? !group.classList.contains("is-open");
+  if (isOpen) {
+    group.parentElement?.querySelectorAll(".tree__group.is-open").forEach((sibling) => {
+      if (sibling !== group) setGroupOpen(sibling, false);
+    });
+  }
+  setGroupOpen(group, isOpen);
 }
 
 /** Marco la ruta activa en los dos árboles y abro el bloque que la contiene. */
@@ -373,6 +392,7 @@ function syncTree(routeId, blockId) {
       const isCurrent = /** @type {HTMLElement} */ (group).dataset.block === blockId;
       group.classList.toggle("is-current", isCurrent);
       if (isCurrent) toggleGroup(group, true);
+      if (!blockId) setGroupOpen(group, false);
     });
     const active = tree.querySelector(".is-active");
     if (active && tree.id === "tree-desktop") active.scrollIntoView({ block: "nearest", behavior: "smooth" });

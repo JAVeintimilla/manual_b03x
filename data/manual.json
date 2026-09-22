@@ -4141,6 +4141,12 @@
    "section": "b2-2"
   },
   {
+   "label": "Configuración inicial",
+   "icon": "adjustments-horizontal",
+   "tone": "success",
+   "section": "b4"
+  },
+  {
    "label": "Ciudad, carretera y garaje",
    "icon": "steering-wheel",
    "tone": "success",
