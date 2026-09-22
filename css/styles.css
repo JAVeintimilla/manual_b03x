@@ -307,6 +307,7 @@ kbd {
   color: var(--ink); text-decoration: none;
   transition: border-color .2s, transform .3s var(--ease-spring), box-shadow .3s var(--ease-out);
 }
+:root .card, :root[data-theme="dark"] .card { color: var(--ink); }
 .card:hover { border-color: var(--signal); transform: translateY(-2px); box-shadow: 0 10px 24px -14px rgba(0, 0, 0, .35); }
 .card:active { transform: scale(.985); }
 .card__icon {
@@ -317,11 +318,11 @@ kbd {
   transition: box-shadow .35s var(--ease-out);
 }
 .card:hover .card__icon { box-shadow: inset 0 0 0 2px var(--signal), 0 0 16px -2px var(--signal); }
-.card__icon--marker { font: 700 1.5rem/1 var(--font-head); }
+.card__icon--marker { font: 700 1.35rem/1 var(--font-head); }
 .card__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
-.card__title { font: 600 clamp(1.2rem, 1.1rem + .4vw, 1.4rem)/1.2 var(--font-head); }
+.card__title { font: 600 clamp(1.05rem, 1rem + .3vw, 1.22rem)/1.2 var(--font-head); }
 .card__num { color: var(--signal-ink); margin-right: 8px; }
-.card__sub { font-size: 1rem; line-height: 1.35; color: var(--ink-soft); }
+.card__sub { font-size: .95rem; line-height: 1.35; color: var(--ink-soft); }
 .card__go { font-size: 22px; color: var(--ink-soft); transition: transform .3s var(--ease-spring), color .2s; }
 .card:hover .card__go { transform: translateX(4px); color: var(--signal-ink); }
 .card--section { padding-block: 16px; }
